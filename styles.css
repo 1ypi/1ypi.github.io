@@ -766,9 +766,6 @@
             }
         }
         @media (max-width: 768px) {
-            .cursor {
-                display: none !important;
-            }
             
             .container, .main-content {
                 padding: 10px;
