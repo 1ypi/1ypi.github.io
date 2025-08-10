@@ -1,6 +1,4 @@
-
-
-        const cursor = document.querySelector('.cursor');
+const cursor = document.querySelector('.cursor');
         let mouseX = 0;
         let mouseY = 0;
         let cursorX = 0;
@@ -671,4 +669,9 @@ function startBootSequence() {
 
     setTimeout(addBootLine, 500);
 }
-    
+
+document.getElementById('bootConfirmBtn').addEventListener('click', function() {
+    document.getElementById('bootInput').style.display = 'none';
+    document.querySelector('.boot-progress').style.display = 'block';
+    startBootSequence();
+});
