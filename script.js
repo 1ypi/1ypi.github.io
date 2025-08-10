@@ -241,7 +241,6 @@ function showBootPrompt() {
     const bootProgress = document.querySelector('.boot-progress');
 
     bootProgress.style.display = 'none';
-    let userInput = '';
 
     const promptLine = document.createElement('div');
     promptLine.className = 'boot-line info';
@@ -249,33 +248,86 @@ function showBootPrompt() {
     bootLogsContainer.appendChild(promptLine);
     bootScreen.style.display = 'flex';
 
-    // Handle keyboard input
-    function handleKeyPress(e) {
-        if (e.key === 'Enter') {
-            if (userInput.toLowerCase() === 'n') {
-                window.location.href = 'https://google.com';
-            } else {
-                startBootSequence();
-            }
-        } else if (e.key.toLowerCase() === 'y' || e.key.toLowerCase() === 'n') {
-            userInput = e.key;
-            promptLine.innerHTML = `Boot system? (Y/n): ${userInput}<span class="cursor">_</span>`;
-        }
-    }
+    let userInput = ''; // Initialize userInput variable here
 
-    // Handle mobile virtual keyboard
+    // Add virtual keyboard handlers
     document.querySelectorAll('.virtual-key').forEach(key => {
         key.addEventListener('click', function() {
             const keyValue = this.getAttribute('data-key');
-            if (keyValue.toLowerCase() === 'y') {
-                startBootSequence();
-            } else if (keyValue.toLowerCase() === 'n') {
-                window.location.href = 'https://google.com';
+            
+            // Update the prompt display
+            const cursor = promptLine.querySelector('.cursor');
+            if (cursor) {
+                cursor.remove();
             }
+            promptLine.innerHTML = `Boot system? (Y/n): ${keyValue}`;
+            
+            // Process the input immediately
+            processInput(keyValue);
         });
     });
 
+    function processInput(input) {
+        if (input.toLowerCase() === 'n') {
+            const redirectLine = document.createElement('div');
+            redirectLine.className = 'boot-line info';
+            redirectLine.textContent = 'Redirecting to Google...';
+            bootLogsContainer.appendChild(redirectLine);
+            
+            setTimeout(() => {
+                window.location.href = 'https://google.com';
+            }, 1000);
+        } else {
+            // Default to 'y' for any other input
+            const confirmLine = document.createElement('div');
+            confirmLine.className = 'boot-line ok';
+            confirmLine.textContent = 'Starting boot sequence...';
+            bootLogsContainer.appendChild(confirmLine);
+            
+            // Remove event listener to prevent multiple triggers
+            document.removeEventListener('keydown', handleKeyPress);
+            
+            setTimeout(() => {
+                startBootSequence();
+            }, 800);
+        }
+    }
+
+    // Keep existing keyboard handler for desktop
+    function handleKeyPress(e) {
+        console.log('Key pressed:', e.key); // Debug log
+        const cursor = promptLine.querySelector('.cursor');
+
+        if (e.key === 'Enter') {
+            if (cursor) {
+                cursor.remove();
+            }
+
+            const inputToProcess = userInput || 'y'; // Default to 'y' if no input
+            promptLine.innerHTML = `Boot system? (Y/n): ${inputToProcess}`;
+            
+            processInput(inputToProcess);
+            
+        } else if (e.key.length === 1) {
+            // Accept any single character input
+            userInput = e.key;
+            if (cursor) {
+                cursor.remove();
+            }
+            promptLine.innerHTML = `Boot system? (Y/n): ${userInput}<span class="cursor">_</span>`;
+            
+        } else if (e.key === 'Backspace' && userInput.length > 0) {
+            userInput = '';
+            if (cursor) {
+                cursor.remove();
+            }
+            promptLine.innerHTML = 'Boot system? (Y/n): <span class="cursor">_</span>';
+        }
+    }
+
+    // Make sure to add the event listener
     document.addEventListener('keydown', handleKeyPress);
+    console.log('Keyboard event listener added'); // Debug log
 }
 
         function startBootSequence() {
