@@ -670,8 +670,12 @@ function startBootSequence() {
     setTimeout(addBootLine, 500);
 }
 
-document.getElementById('bootConfirmBtn').addEventListener('click', function() {
-    document.getElementById('bootInput').style.display = 'none';
-    document.querySelector('.boot-progress').style.display = 'block';
-    startBootSequence();
+document.querySelectorAll('.virtual-key').forEach(key => {
+    key.addEventListener('click', function() {
+        const keyValue = this.getAttribute('data-key');
+        const event = new KeyboardEvent('keydown', {
+            key: keyValue
+        });
+        document.dispatchEvent(event);
+    });
 });
