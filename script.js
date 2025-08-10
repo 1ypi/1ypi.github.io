@@ -218,7 +218,7 @@ const cursor = document.querySelector('.cursor');
             '[    0.202000] Forensics toolkit ready',
             '[    0.203000] Penetration testing framework loaded',
             '[    0.204000] Network security protocols active',
-            '[    0.205000] Welcome to the Matrix, 1ypi'
+            '[    0.205000] Welcome, 1ypi'
         ];
 
         function createBeepSound() {
@@ -248,8 +248,38 @@ function showBootPrompt() {
     bootLogsContainer.appendChild(promptLine);
     bootScreen.style.display = 'flex';
 
-    let userInput = '';
+    // Add virtual keyboard handlers
+    document.querySelectorAll('.virtual-key').forEach(key => {
+        key.addEventListener('click', function() {
+            const keyValue = this.getAttribute('data-key');
+            promptLine.innerHTML = `Boot system? (Y/n): ${keyValue}`;
+            
+            // Start boot sequence immediately for Y
+            if(keyValue.toLowerCase() === 'y') {
+                const confirmLine = document.createElement('div');
+                confirmLine.className = 'boot-line ok';
+                confirmLine.textContent = 'Starting boot sequence...';
+                bootLogsContainer.appendChild(confirmLine);
+                
+                setTimeout(() => {
+                    startBootSequence();
+                }, 500);
+            } 
+            // Redirect for N
+            else if(keyValue.toLowerCase() === 'n') {
+                const redirectLine = document.createElement('div');
+                redirectLine.className = 'boot-line info';
+                redirectLine.textContent = 'Redirecting to Google...';
+                bootLogsContainer.appendChild(redirectLine);
+                
+                setTimeout(() => {
+                    window.location.href = 'https://google.com';
+                }, 1000);
+            }
+        });
+    });
 
+    // Keep existing keyboard handler for desktop
     function handleKeyPress(e) {
         const cursor = promptLine.querySelector('.cursor');
 
@@ -689,5 +719,3 @@ document.querySelectorAll('.virtual-key').forEach(key => {
         }, 100);
     });
 });
-
-// d
