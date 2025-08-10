@@ -1,0 +1,164 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1ypi - Cybersecurity Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="cursor"></div>
+
+    <div class="background-container">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+        <div class="gradient-sphere sphere-3"></div>
+        <div class="grid-overlay"></div>
+        <div class="glow"></div>
+        <div class="noise-overlay"></div>
+        <div class="particles-container" id="particles-container"></div>
+        <div class="matrix"></div>
+    </div>
+
+    <div class="boot-screen" id="bootScreen">
+        <div class="boot-logs" id="bootLogs"></div>
+        <div class="boot-progress">
+            <div class="boot-spinner"></div>
+        </div>
+    </div>
+
+    <div class="enter-screen" id="enterScreen" style="display: none;">
+        <button class="enter-button" id="enterButton">start</button>
+    </div>
+
+    <div class="main-content" id="mainContent">
+
+    <audio id="ambientSound">
+        <source src="appear.mp3" type="audio/wav">
+    </audio>
+
+        <div class="container">
+
+            <div class="header">
+                <div class="profile-pic">
+                    <img src="1ypi.jpeg" alt="1ypi" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <h1 class="username encrypted glitch" data-text="1ypi">1ypi</h1>
+                <p class="bio encrypted" data-text="Cybersecurity Student &amp; Digital Forensics Enthusiast">Cybersecurity Student &amp; Digital Forensics Enthusiast</p>
+            </div>
+
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot"></div>
+                    <div class="terminal-dot"></div>
+                    <div class="terminal-dot"></div>
+                </div>
+                <div class="terminal-body">
+                    <div class="command-line">
+                        <span class="prompt">user@1ypi:~$</span>
+                        <span class="command">whoami</span>
+                    </div>
+                    <div class="output">Cybersecurity enthusiast specializing in penetration testing and digital forensics</div>
+
+                    <div class="command-line">
+                        <span class="prompt">user@1ypi:~$</span>
+                        <span class="command">cat skills.txt</span>
+                    </div>
+                    <div class="output">
+                        • Network Security &amp; Penetration Testing<br>
+                        • Digital Forensics &amp; Incident Response<br>
+                        • Vulnerability Assessment<br>
+                        • Malware Analysis<br>
+                        • Cryptography &amp; Privacy Tools
+                    </div>
+
+                    <div class="command-line">
+                        <span class="prompt">user@1ypi:~$</span>
+                        <span class="command">ls -la current_projects/</span>
+                    </div>
+                    <div class="output">
+                        drwxr-xr-x  2 1ypi 1ypi 4096 Aug 10 2025 security_toolkit/<br>
+                        drwxr-xr-x  2 1ypi 1ypi 4096 Aug 10 2025 forensics_scripts/<br>
+                        drwxr-xr-x  2 1ypi 1ypi 4096 Aug 10 2025 vulnerability_scanner/<br>
+                        -rw-r--r--  1 1ypi 1ypi 2048 Aug 10 2025 README.md
+                    </div>
+                </div>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🛡️</div>
+                    <h3 class="skill-title">Network Security</h3>
+                    <p class="skill-description">Securing networks through advanced firewall configurations, intrusion detection systems, and security monitoring.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🔍</div>
+                    <h3 class="skill-title">Digital Forensics</h3>
+                    <p class="skill-description">Analyzing digital evidence, recovering deleted data, and investigating cybersecurity incidents.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">⚔️</div>
+                    <h3 class="skill-title">Penetration Testing</h3>
+                    <p class="skill-description">Ethical hacking and vulnerability assessment to identify security weaknesses in systems.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🦠</div>
+                    <h3 class="skill-title">Malware Analysis</h3>
+                    <p class="skill-description">Reverse engineering and analyzing malicious software to understand attack vectors.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🔐</div>
+                    <h3 class="skill-title">Cryptography</h3>
+                    <p class="skill-description">Implementing encryption protocols and analyzing cryptographic systems for vulnerabilities.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🚨</div>
+                    <h3 class="skill-title">Incident Response</h3>
+                    <p class="skill-description">Rapid response to security breaches and coordinating recovery efforts.</p>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <div class="stat-item">
+                    <div class="stat-number">2+</div>
+                    <div class="stat-label">Years Learning</div>
+                </div>
+                <div class="stat-item">
+                    <div style="font-size: 36px;">
+                        <i class="fab fa-linux"></i>
+                    </div>
+                    <div class="stat-label">Current OS: Arch</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Security Tools</div>
+                </div>
+                <div class="stat-item">
+                    <div style="font-size: 36px;">24/7</div>
+                    <div class="stat-label">Learning Mode</div>
+                </div>
+            </div>
+
+            <div class="social-section">
+                <h2>Connect With Me</h2>
+                <div class="social-links">
+                    <div class="discord-container">
+                        <i class="fab fa-discord social-icon"></i>
+                        <div class="discord-tooltip">@1ypi</div>
+                    </div>
+                    <a href="https://github.com/1ypi" target="_blank">
+                        <i class="fab fa-github social-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>© 2025 1ypi • Cybersecurity Student • Always Learning</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body></html>
