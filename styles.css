@@ -36,10 +36,6 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        *, *::before, *::after {
-            cursor: none !important;
-        }
-
         .background-container {
             position: fixed;
             top: 0;
@@ -644,9 +640,7 @@
         }
 
         @media (max-width: 768px) {
-            .cursor {
-                display: none !important;
-            }
+
             .container, .main-content {
                 padding: 10px;
                 width: 100vw;
