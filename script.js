@@ -673,10 +673,19 @@ function startBootSequence() {
 document.querySelectorAll('.virtual-key').forEach(key => {
     key.addEventListener('click', function() {
         const keyValue = this.getAttribute('data-key');
-        const event = new KeyboardEvent('keydown', {
+        
+        // First simulate the letter key press
+        const keyEvent = new KeyboardEvent('keydown', {
             key: keyValue
         });
-        document.dispatchEvent(event);
+        document.dispatchEvent(keyEvent);
+        
+        // Then automatically simulate Enter key press after a short delay
+        setTimeout(() => {
+            const enterEvent = new KeyboardEvent('keydown', {
+                key: 'Enter'
+            });
+            document.dispatchEvent(enterEvent);
+        }, 100);
     });
 });
-#
