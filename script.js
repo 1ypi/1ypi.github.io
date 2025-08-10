@@ -339,23 +339,37 @@ document.addEventListener('DOMContentLoaded', () => {
             const bootLogsContainer = document.getElementById('bootLogs');
             const enterScreen = document.getElementById('enterScreen');
             const bootProgress = document.querySelector('.boot-progress');
+            const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
             bootProgress.style.display = 'block';
-
             let currentLine = 0;
+            
+            // Reduce logs for mobile
+            const mobileBootLogs = [
+                '[    0.000000] Linux version 6.1.0-arch1-1',
+                '[    0.001000] BIOS-provided physical RAM map:',
+                '[    0.002000] DMI: 1ypi/CyberSec-Machine',
+                '[    0.050000] AppArmor: AppArmor initialized',
+                '[    0.100000] Network security protocols active',
+                '[    0.200000] 1ypi CyberSec System initialized',
+                '[    0.201000] Loading security modules...',
+                '[    0.202000] Forensics toolkit ready',
+                '[    0.203000] Welcome, 1ypi'
+            ];
 
             function addBootLine() {
-                if (currentLine >= bootLogs.length) {
-
+                const logs = isMobile ? mobileBootLogs : bootLogs;
+                
+                if (currentLine >= logs.length) {
                     setTimeout(() => {
                         document.getElementById('bootScreen').style.opacity = '0';
                         setTimeout(() => {
                             document.getElementById('bootScreen').style.display = 'none';
                             enterScreen.style.display = 'flex';
                             showCursor();
-
+                            
                             const startSound = new Audio('start.mp3');
-                            startSound.volume = 0.5; 
+                            startSound.volume = 0.5;
                             startSound.play().catch(err => console.log('Audio play failed:', err));
                         }, 0);
                     }, 0);
@@ -364,31 +378,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const line = document.createElement('div');
                 line.className = 'boot-line info';
-                line.textContent = bootLogs[currentLine];
+                line.textContent = logs[currentLine];
 
-                if (bootLogs[currentLine].includes('OK') || bootLogs[currentLine].includes('successful')) {
+                if (logs[currentLine].includes('OK') || logs[currentLine].includes('successful')) {
                     line.className = 'boot-line ok';
-                } else if (bootLogs[currentLine].includes('Warning')) {
+                } else if (logs[currentLine].includes('Warning')) {
                     line.className = 'boot-line warning';
-                } else if (bootLogs[currentLine].includes('Error')) {
+                } else if (logs[currentLine].includes('Error')) {
                     line.className = 'boot-line error';
-                } else if (bootLogs[currentLine].includes('[')) {
+                } else if (logs[currentLine].includes('[')) {
                     line.className = 'boot-line timestamp';
                 }
 
                 bootLogsContainer.appendChild(line);
 
-                try {
-                    createBeepSound();
-                } catch (e) {
-                    console.log('Audio not available');
+                // Play beep sound only every 3rd line on mobile
+                if (!isMobile || currentLine % 3 === 0) {
+                    try {
+                        createBeepSound();
+                    } catch (e) {
+                        console.log('Audio not available');
+                    }
                 }
 
                 bootLogsContainer.scrollTop = bootLogsContainer.scrollHeight;
-
                 currentLine++;
 
-                const delay = Math.random() * 30 + 10;
+                // Longer delay between lines on mobile
+                const delay = isMobile ? 150 : Math.random() * 30 + 10;
                 setTimeout(addBootLine, delay);
             }
 
@@ -657,11 +674,29 @@ function showCursor() {
 function startBootSequence() {
     const bootLogsContainer = document.getElementById('bootLogs');
     const enterScreen = document.getElementById('enterScreen');
+    const bootProgress = document.querySelector('.boot-progress');
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
+    bootProgress.style.display = 'block';
     let currentLine = 0;
+    
+    // Reduce logs for mobile
+    const mobileBootLogs = [
+        '[    0.000000] Linux version 6.1.0-arch1-1',
+        '[    0.001000] BIOS-provided physical RAM map:',
+        '[    0.002000] DMI: 1ypi/CyberSec-Machine',
+        '[    0.050000] AppArmor: AppArmor initialized',
+        '[    0.100000] Network security protocols active',
+        '[    0.200000] 1ypi CyberSec System initialized',
+        '[    0.201000] Loading security modules...',
+        '[    0.202000] Forensics toolkit ready',
+        '[    0.203000] Welcome, 1ypi'
+    ];
 
     function addBootLine() {
-        if (currentLine >= bootLogs.length) {
+        const logs = isMobile ? mobileBootLogs : bootLogs;
+        
+        if (currentLine >= logs.length) {
 
             setTimeout(() => {
                 document.getElementById('bootScreen').style.opacity = '0';
@@ -680,31 +715,34 @@ function startBootSequence() {
 
         const line = document.createElement('div');
         line.className = 'boot-line info';
-        line.textContent = bootLogs[currentLine];
+        line.textContent = logs[currentLine];
 
-        if (bootLogs[currentLine].includes('OK') || bootLogs[currentLine].includes('successful')) {
+        if (logs[currentLine].includes('OK') || logs[currentLine].includes('successful')) {
             line.className = 'boot-line ok';
-        } else if (bootLogs[currentLine].includes('Warning')) {
+        } else if (logs[currentLine].includes('Warning')) {
             line.className = 'boot-line warning';
-        } else if (bootLogs[currentLine].includes('Error')) {
+        } else if (logs[currentLine].includes('Error')) {
             line.className = 'boot-line error';
-        } else if (bootLogs[currentLine].includes('[')) {
+        } else if (logs[currentLine].includes('[')) {
             line.className = 'boot-line timestamp';
         }
 
         bootLogsContainer.appendChild(line);
 
-        try {
-            createBeepSound();
-        } catch (e) {
-            console.log('Audio not available');
+        // Play beep sound only every 3rd line on mobile
+        if (!isMobile || currentLine % 3 === 0) {
+            try {
+                createBeepSound();
+            } catch (e) {
+                console.log('Audio not available');
+            }
         }
 
         bootLogsContainer.scrollTop = bootLogsContainer.scrollHeight;
-
         currentLine++;
 
-        const delay = Math.random() * 30 + 10;
+        // Longer delay between lines on mobile
+        const delay = isMobile ? 150 : Math.random() * 30 + 10;
         setTimeout(addBootLine, delay);
     }
 
