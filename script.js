@@ -241,6 +241,7 @@ function showBootPrompt() {
     const bootProgress = document.querySelector('.boot-progress');
 
     bootProgress.style.display = 'none';
+    let userInput = '';
 
     const promptLine = document.createElement('div');
     promptLine.className = 'boot-line info';
@@ -248,82 +249,31 @@ function showBootPrompt() {
     bootLogsContainer.appendChild(promptLine);
     bootScreen.style.display = 'flex';
 
-    // Add virtual keyboard handlers
+    // Handle keyboard input
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            if (userInput.toLowerCase() === 'n') {
+                window.location.href = 'https://google.com';
+            } else {
+                startBootSequence();
+            }
+        } else if (e.key.toLowerCase() === 'y' || e.key.toLowerCase() === 'n') {
+            userInput = e.key;
+            promptLine.innerHTML = `Boot system? (Y/n): ${userInput}<span class="cursor">_</span>`;
+        }
+    }
+
+    // Handle mobile virtual keyboard
     document.querySelectorAll('.virtual-key').forEach(key => {
         key.addEventListener('click', function() {
             const keyValue = this.getAttribute('data-key');
-            promptLine.innerHTML = `Boot system? (Y/n): ${keyValue}`;
-            
-            // Start boot sequence immediately for Y
-            if(keyValue.toLowerCase() === 'y') {
-                const confirmLine = document.createElement('div');
-                confirmLine.className = 'boot-line ok';
-                confirmLine.textContent = 'Starting boot sequence...';
-                bootLogsContainer.appendChild(confirmLine);
-                
-                setTimeout(() => {
-                    startBootSequence();
-                }, 500);
-            } 
-            // Redirect for N
-            else if(keyValue.toLowerCase() === 'n') {
-                const redirectLine = document.createElement('div');
-                redirectLine.className = 'boot-line info';
-                redirectLine.textContent = 'Redirecting to Google...';
-                bootLogsContainer.appendChild(redirectLine);
-                
-                setTimeout(() => {
-                    window.location.href = 'https://google.com';
-                }, 1000);
+            if (keyValue.toLowerCase() === 'y') {
+                startBootSequence();
+            } else if (keyValue.toLowerCase() === 'n') {
+                window.location.href = 'https://google.com';
             }
         });
     });
-
-    // Keep existing keyboard handler for desktop
-    function handleKeyPress(e) {
-        const cursor = promptLine.querySelector('.cursor');
-
-        if (e.key === 'Enter') {
-
-            cursor.remove();
-
-            if (userInput.toLowerCase() === 'n') {
-
-                promptLine.innerHTML = 'Boot system? (Y/n): n';
-
-                const redirectLine = document.createElement('div');
-                redirectLine.className = 'boot-line info';
-                redirectLine.textContent = 'Redirecting to Google...';
-                bootLogsContainer.appendChild(redirectLine);
-
-                setTimeout(() => {
-                    window.location.href = 'https://google.com';
-                }, 1000);
-            } else {
-
-                promptLine.innerHTML = 'Boot system? (Y/n): ' + (userInput || 'y');
-
-                const confirmLine = document.createElement('div');
-                confirmLine.className = 'boot-line ok';
-                confirmLine.textContent = 'Starting boot sequence...';
-                bootLogsContainer.appendChild(confirmLine);
-
-                document.removeEventListener('keydown', handleKeyPress);
-
-                setTimeout(() => {
-                    startBootSequence();
-                }, 800);
-            }
-        } else if (e.key.length === 1 && userInput.length === 0) {
-
-            userInput = e.key;
-            promptLine.innerHTML = `Boot system? (Y/n): ${userInput}<span class="cursor">_</span>`;
-        } else if (e.key === 'Backspace' && userInput.length > 0) {
-
-            userInput = '';
-            promptLine.innerHTML = 'Boot system? (Y/n): <span class="cursor">_</span>';
-        }
-    }
 
     document.addEventListener('keydown', handleKeyPress);
 }
