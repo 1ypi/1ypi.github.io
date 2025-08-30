@@ -248,21 +248,18 @@ function showBootPrompt() {
     bootLogsContainer.appendChild(promptLine);
     bootScreen.style.display = 'flex';
 
-    let userInput = ''; // Initialize userInput variable here
+    let userInput = ''; 
 
-    // Add virtual keyboard handlers
     document.querySelectorAll('.virtual-key').forEach(key => {
         key.addEventListener('click', function() {
             const keyValue = this.getAttribute('data-key');
-            
-            // Update the prompt display
+
             const cursor = promptLine.querySelector('.cursor');
             if (cursor) {
                 cursor.remove();
             }
             promptLine.innerHTML = `Boot system? (Y/n): ${keyValue}`;
-            
-            // Process the input immediately
+
             processInput(keyValue);
         });
     });
@@ -273,34 +270,34 @@ function showBootPrompt() {
             redirectLine.className = 'boot-line info';
             redirectLine.textContent = 'Redirecting to Google...';
             bootLogsContainer.appendChild(redirectLine);
-            
+
             setTimeout(() => {
                 window.location.href = 'https://google.com';
             }, 1000);
         } else {
-            // Default to 'y' for any other input
+
             const confirmLine = document.createElement('div');
             confirmLine.className = 'boot-line ok';
             confirmLine.textContent = 'Starting boot sequence...';
             bootLogsContainer.appendChild(confirmLine);
-            
-            // Remove event listener to prevent multiple triggers
+
             document.removeEventListener('keydown', handleKeyPress);
-            
+
             setTimeout(() => {
                 startBootSequence();
             }, 800);
         }
     }
 document.addEventListener('DOMContentLoaded', () => {
-    // Show cursor immediately for desktop
+
     if (window.matchMedia("(min-width: 769px)").matches) {
         showCursor();
     }
 });
-    // Keep existing keyboard handler for desktop
+
     function handleKeyPress(e) {
-        console.log('Key pressed:', e.key); // Debug log
+        console.log('Key pressed:', e.key); 
+
         const cursor = promptLine.querySelector('.cursor');
 
         if (e.key === 'Enter') {
@@ -308,19 +305,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 cursor.remove();
             }
 
-            const inputToProcess = userInput || 'y'; // Default to 'y' if no input
+            const inputToProcess = userInput || 'y'; 
+
             promptLine.innerHTML = `Boot system? (Y/n): ${inputToProcess}`;
-            
+
             processInput(inputToProcess);
-            
+
         } else if (e.key.length === 1) {
-            // Accept any single character input
+
             userInput = e.key;
             if (cursor) {
                 cursor.remove();
             }
             promptLine.innerHTML = `Boot system? (Y/n): ${userInput}<span class="cursor">_</span>`;
-            
+
         } else if (e.key === 'Backspace' && userInput.length > 0) {
             userInput = '';
             if (cursor) {
@@ -330,9 +328,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Make sure to add the event listener
     document.addEventListener('keydown', handleKeyPress);
-    console.log('Keyboard event listener added'); // Debug log
+    console.log('Keyboard event listener added'); 
+
 }
 
         function startBootSequence() {
@@ -343,8 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             bootProgress.style.display = 'block';
             let currentLine = 0;
-            
-            // Reduce logs for mobile
+
             const mobileBootLogs = [
                 '[    0.000000] Linux version 6.1.0-arch1-1',
                 '[    0.001000] BIOS-provided physical RAM map:',
@@ -357,7 +354,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 '[    0.203000] Welcome, 1ypi'
             ];
 
-            // Select the appropriate logs array based on device
             const logsToUse = isMobile ? mobileBootLogs : bootLogs;
 
             function addBootLine() {
@@ -368,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             document.getElementById('bootScreen').style.display = 'none';
                             enterScreen.style.display = 'flex';
                             showCursor();
-                            
+
                             const startSound = new Audio('start.mp3');
                             startSound.volume = 0.5;
                             startSound.play().catch(err => console.log('Audio play failed:', err));
@@ -393,7 +389,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 bootLogsContainer.appendChild(line);
 
-                // Play beep sound only every 3rd line on mobile
                 if (!isMobile || currentLine % 3 === 0) {
                     try {
                         createBeepSound();
@@ -405,7 +400,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 bootLogsContainer.scrollTop = bootLogsContainer.scrollHeight;
                 currentLine++;
 
-                // Longer delay between lines on mobile
                 const delay = isMobile ? 150 : Math.random() * 30 + 10;
                 setTimeout(addBootLine, delay);
             }
@@ -464,6 +458,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('.username'),
                 document.querySelector('.bio'),
                 document.querySelector('.terminal'),
+                document.querySelector('.profile-pic'),
+                document.querySelector('.discord-status-card'),
                 ...document.querySelectorAll('.skill-card'),
                 ...document.querySelectorAll('.stat-item'),
                 ...document.querySelectorAll('.social-icon'),
@@ -664,8 +660,7 @@ function showCursor() {
     const cursor = document.querySelector('.cursor');
     cursor.style.display = 'block';
     cursor.style.opacity = '1';
-    
-    // Re-initialize cursor movement
+
     document.addEventListener('mousemove', e => {
         mouseX = e.clientX;
         mouseY = e.clientY;
@@ -675,14 +670,12 @@ function showCursor() {
 document.querySelectorAll('.virtual-key').forEach(key => {
     key.addEventListener('click', function() {
         const keyValue = this.getAttribute('data-key');
-        
-        // First simulate the letter key press
+
         const keyEvent = new KeyboardEvent('keydown', {
             key: keyValue
         });
         document.dispatchEvent(keyEvent);
-        
-        // Then automatically simulate Enter key press after a short delay
+
         setTimeout(() => {
             const enterEvent = new KeyboardEvent('keydown', {
                 key: 'Enter'
@@ -691,3 +684,460 @@ document.querySelectorAll('.virtual-key').forEach(key => {
         }, 100);
     });
 });
+
+const avatar = document.getElementById('discordAvatar');
+const lanyardUsername = document.getElementById('lanyardUsername');
+const lanyardDiscordTag = document.getElementById('lanyardDiscordTag');
+const lanyardServerTag = document.getElementById('lanyardServerTag');
+const statusIcon = document.getElementById('statusIcon');
+const activitySection = document.getElementById('activitySection');
+const activityWrapper = document.getElementById('activityWrapper');
+
+const statusMap = {
+    online: { color: '#23a55a', icon: '●', text: 'Online' },
+    idle: { color: '#f0b232', icon: '●', text: 'Away' },
+    dnd: { color: '#f23f43', icon: '⦸', text: 'Do Not Disturb' },
+    offline: { color: '#80848e', icon: '●', text: 'Offline' }
+};
+
+function updateDiscordStatus(data) {
+    const container = document.getElementById('discordStatus');
+    const user = data.discord_user;
+    const status = data.discord_status;
+    const activities = data.activities || [];
+
+    const avatarUrl = user.avatar 
+        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
+        : `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png`;
+
+    const statusInfo = statusMap[status] || statusMap.offline;
+
+    let activitiesHTML = '';
+
+    const spotifyActivity = activities.find(a => a.id === 'spotify:1');
+    const gameActivities = activities.filter(a => a.type === 0 && a.id !== 'spotify:1');
+    const customStatus = activities.find(a => a.type === 4);
+    const mainProfilePic = document.querySelector('.profile-pic img');
+    if (mainProfilePic) {
+        mainProfilePic.src = avatarUrl;
+    }
+    if (spotifyActivity) {
+        const albumArt = spotifyActivity.assets?.large_image 
+            ? `https://i.scdn.co/image/${spotifyActivity.assets.large_image.replace('spotify:', '')}`
+            : 'https://open.spotify.com/favicon.ico';
+
+        activitiesHTML += `
+            <div class="activity-card spotify-activity">
+                <div class="activity-image">
+                    <img src="${albumArt}" alt="Album Art" onerror="this.src='https://open.spotify.com/favicon.ico'">
+                </div>
+                <div class="activity-details">
+                    <div class="activity-name">
+                        <i class="fab fa-spotify"></i> Listening to Spotify
+                    </div>
+                    <div class="activity-description">
+                        <strong>${spotifyActivity.details || 'Unknown Track'}</strong><br>
+                        by ${spotifyActivity.state || 'Unknown Artist'}
+                    </div>
+                    ${spotifyActivity.sync_id ? `
+                        <a href="https://open.spotify.com/track/${spotifyActivity.sync_id}" target="_blank" class="spotify-link">
+                            <i class="fas fa-external-link-alt"></i> Open in Spotify
+                        </a>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    gameActivities.forEach(activity => {
+        const imageUrl = activity.assets?.large_image
+            ? `https://cdn.discordapp.com/app-assets/${activity.application_id}/${activity.assets.large_image}.png`
+            : 'https://via.placeholder.com/48x48/36393f/ffffff?text=Game';
+
+        activitiesHTML += `
+            <div class="activity-card game-activity">
+                <div class="activity-image">
+                    <img src="${imageUrl}" alt="${activity.name}" onerror="this.src='https://via.placeholder.com/48x48/36393f/ffffff?text=Game'">
+                </div>
+                <div class="activity-details">
+                    <div class="activity-name">
+                        <i class="fas fa-gamepad"></i> Playing ${activity.name}
+                    </div>
+                    <div class="activity-description">
+                        ${activity.details || ''}${activity.details && activity.state ? '<br>' : ''}${activity.state || ''}
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    if (customStatus && customStatus.state) {
+        activitiesHTML += `
+            <div class="activity-card custom-status">
+                <div class="activity-image">
+                    ${customStatus.emoji ? 
+                        (customStatus.emoji.id ? 
+                            `<img src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.png" alt="${customStatus.emoji.name}">` :
+                            `<div style="font-size: 24px; display: flex; align-items: center; justify-content: center; height: 100%;">${customStatus.emoji.name}</div>`
+                        ) : 
+                        '<div style="font-size: 24px; display: flex; align-items: center; justify-content: center; height: 100%;">💭</div>'
+                    }
+                </div>
+                <div class="activity-details">
+                    <div class="activity-name">
+                        <i class="fas fa-comment-dots"></i> Custom Status
+                    </div>
+                    <div class="activity-description">
+                        ${customStatus.state}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    if (!activitiesHTML) {
+        activitiesHTML = `
+            <div class="activity-card" style="opacity: 0.6; border-style: dashed;">
+                <div class="activity-image" style="background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-moon" style="font-size: 20px; color: #72767d;"></i>
+                </div>
+                <div class="activity-details">
+                    <div class="activity-name" style="color: #72767d;">
+                        <i class="fas fa-bed"></i> Currently idle
+                    </div>
+                    <div class="activity-description">
+                        Not doing anything interesting right now
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    container.innerHTML = `
+        <div class="discord-header">
+            <div class="discord-avatar">
+                <img src="${avatarUrl}" alt="Avatar" onerror="this.src='https://via.placeholder.com/64x64/36393f/ffffff?text=${user.username.charAt(0)}'">
+                <div class="status-indicator status-${status}" title="${statusInfo.text}">
+                    ${statusInfo.icon}
+                </div>
+            </div>
+            <div class="discord-info">
+                <h3>${user.global_name || user.display_name || user.username}</h3>
+                <div class="username">@${user.username}${user.discriminator !== '0' ? `#${user.discriminator}` : ''}</div>
+                <div class="status-text">${statusInfo.text}</div>
+            </div>
+        </div>
+        <div class="activities-container">
+            ${activitiesHTML}
+        </div>
+    `;
+    dynamicFavicon.updateWithDiscordData(data);
+}
+
+function showDiscordError(message) {
+    const container = document.getElementById('discordStatus');
+    container.innerHTML = `
+        <div class="error-state">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>${message}</p>
+            <button onclick="fetchLanyardData()" style="margin-top: 12px; padding: 8px 16px; background: #f23f43; border: none; border-radius: 6px; color: white; cursor: pointer;">
+                Retry
+            </button>
+        </div>
+    `;
+    dynamicFavicon.createTextFavicon('!', '#ff0000', '#ffffff');
+    document.title = '❌ 1ypi - Connection Error';
+}
+
+function fetchLanyardData() {
+    fetch('https://lanyard.rest/v1/users/1275055573800452098')
+        .then(res => {
+            if (!res.ok) throw new Error('Failed to fetch');
+            return res.json();
+        })
+        .then(res => {
+            if (res.success) {
+                updateProfile(res.data);
+            } else {
+                showDiscordError('Failed to fetch Discord status');
+            }
+        })
+        .catch(() => {
+            showDiscordError('Unable to connect to Discord');
+        });
+}
+
+function updateProfile(data) {
+    updateDiscordStatus(data);
+}
+
+function updateStatus(status) {
+    const info = statusMap[status] || statusMap.offline;
+    statusIcon.textContent = info.icon;
+    statusIcon.style.color = info.color;
+}
+
+function updateActivities(activities) {
+    activitySection.innerHTML = '';
+    const spotifyActivity = activities.find(a => a.id === 'spotify:1');
+    const gameActivities = activities.filter(a => a.type === 0);
+    if (spotifyActivity) createSpotifyCard(spotifyActivity);
+    gameActivities.forEach(createActivityCard);
+    if (spotifyActivity || gameActivities.length > 0) {
+        activityWrapper.classList.remove('hidden');
+    } else {
+        activityWrapper.classList.add('hidden');
+    }
+}
+
+function createSpotifyCard(activity) {
+    const albumArtUrl = `https://i.scdn.co/image/${activity.assets.large_image.replace('spotify:', '')}`;
+    const song = activity.details;
+    const artist = activity.state;
+    const url = activity.sync_id;
+    activitySection.insertAdjacentHTML('beforeend', `
+        <div class="spotify-card">
+            <img src="${albumArtUrl}" alt="Album Art" style="width:64px;height:64px;border-radius:8px;">
+            <div>
+                <strong>Listening to Spotify</strong><br>
+                <span>${song} by ${artist}</span><br>
+                <a href="https://open.spotify.com/track/${url}" target="_blank">Open in Spotify</a>
+            </div>
+        </div>
+    `);
+}
+
+function createActivityCard(activity) {
+    let imageUrl = 'https://placehold.co/64x64/2c3e50/ffffff?text=Game';
+    if (activity.assets && activity.assets.large_image) {
+        imageUrl = `https://cdn.discordapp.com/app-assets/${activity.application_id}/${activity.assets.large_image}.png`;
+    }
+    activitySection.insertAdjacentHTML('beforeend', `
+        <div class="activity-card">
+            <img src="${imageUrl}" alt="App" style="width:64px;height:64px;border-radius:8px;">
+            <div>
+                <strong>${activity.name}</strong><br>
+                <span>${activity.details || ''}</span><br>
+                <span>${activity.state || ''}</span>
+            </div>
+        </div>
+    `);
+}
+
+function fetchLanyardData() {
+    fetch('https://lanyard.rest/v1/users/1275055573800452098')
+        .then(res => res.json())
+        .then(res => updateProfile(res.data))
+        .catch(() => {});
+}
+fetchLanyardData();
+setInterval(fetchLanyardData, 15000);
+
+class DynamicFavicon {
+    constructor() {
+        this.canvas = document.createElement('canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.canvas.width = 32;
+        this.canvas.height = 32;
+        this.currentFavicon = null;
+
+        this.originalTitle = '1ypi';
+        this.animatedTitles = [
+            '◢ 1ypi ◣',
+            '◤ 1ypi ◥',
+            '▲ 1ypi ▲',
+            '▼ 1ypi ▼',
+            '◆ 1ypi ◆',
+            '● 1ypi ●',
+            '■ 1ypi ■',
+            '▶ 1ypi ◀',
+            '♦ 1ypi ♦',
+            '⬢ 1ypi ⬢'
+        ];
+        this.titleIndex = 0;
+        this.titleInterval = null;
+
+        this.init();
+    }
+
+    init() {
+
+        this.startTitleAnimation();
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                this.showNotificationTitle();
+            } else {
+                this.startTitleAnimation();
+            }
+        });
+    }
+
+    createCircularFavicon(imageUrl, statusColor = null) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+
+            img.onload = () => {
+
+                this.ctx.clearRect(0, 0, 32, 32);
+
+                this.ctx.beginPath();
+                this.ctx.arc(16, 16, 15, 0, 2 * Math.PI);
+                this.ctx.fillStyle = '#36393f';
+                this.ctx.fill();
+
+                this.ctx.save();
+                this.ctx.beginPath();
+                this.ctx.arc(16, 16, 14, 0, 2 * Math.PI);
+                this.ctx.clip();
+
+                this.ctx.drawImage(img, 1, 1, 30, 30);
+                this.ctx.restore();
+
+                if (statusColor) {
+                    this.ctx.beginPath();
+                    this.ctx.arc(24, 24, 4, 0, 2 * Math.PI);
+                    this.ctx.fillStyle = '#000000';
+                    this.ctx.fill();
+
+                    this.ctx.beginPath();
+                    this.ctx.arc(24, 24, 3, 0, 2 * Math.PI);
+                    this.ctx.fillStyle = statusColor;
+                    this.ctx.fill();
+                }
+
+                const dataUrl = this.canvas.toDataURL('image/png');
+                this.updateFavicon(dataUrl);
+                resolve(dataUrl);
+            };
+
+            img.onerror = () => {
+
+                this.createTextFavicon('1Y');
+                resolve(null);
+            };
+
+            img.src = imageUrl;
+        });
+    }
+
+    createTextFavicon(text, bgColor = '#000000', textColor = '#00ff00') {
+        this.ctx.clearRect(0, 0, 32, 32);
+
+        this.ctx.fillStyle = bgColor;
+        this.ctx.fillRect(0, 0, 32, 32);
+
+        this.ctx.strokeStyle = '#333333';
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeRect(0, 0, 32, 32);
+
+        this.ctx.fillStyle = textColor;
+        this.ctx.font = 'bold 12px "JetBrains Mono", monospace';
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.fillText(text, 16, 16);
+
+        const dataUrl = this.canvas.toDataURL('image/png');
+        this.updateFavicon(dataUrl);
+        return dataUrl;
+    }
+
+    updateFavicon(dataUrl) {
+
+        const existingFavicon = document.querySelector('link[rel="icon"], link[rel="shortcut icon"]');
+        if (existingFavicon) {
+            existingFavicon.remove();
+        }
+
+        const link = document.createElement('link');
+        link.rel = 'icon';
+        link.type = 'image/png';
+        link.href = dataUrl;
+        document.head.appendChild(link);
+
+        this.currentFavicon = dataUrl;
+    }
+
+    startTitleAnimation() {
+        if (this.titleInterval) {
+            clearInterval(this.titleInterval);
+        }
+
+        this.titleInterval = setInterval(() => {
+            document.title = this.animatedTitles[this.titleIndex];
+            this.titleIndex = (this.titleIndex + 1) % this.animatedTitles.length;
+        }, 800);
+    }
+
+    showNotificationTitle() {
+        if (this.titleInterval) {
+            clearInterval(this.titleInterval);
+        }
+
+        let isVisible = true;
+        this.titleInterval = setInterval(() => {
+            document.title = isVisible ? '🔴 1ypi - Come back!' : '● 1ypi - New activity';
+            isVisible = !isVisible;
+        }, 1000);
+    }
+
+    updateWithDiscordData(discordData) {
+        const user = discordData.discord_user;
+        const status = discordData.discord_status;
+
+        const statusColors = {
+            online: '#23a55a',
+            idle: '#f0b232',
+            dnd: '#f23f43',
+            offline: '#80848e'
+        };
+
+        const avatarUrl = user.avatar 
+            ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64`
+            : null;
+
+        if (avatarUrl) {
+            this.createCircularFavicon(avatarUrl, statusColors[status]);
+        } else {
+            this.createTextFavicon('1Y', '#000000', '#00ff00');
+        }
+
+        this.updateTitleForStatus(status);
+    }
+
+    updateTitleForStatus(status) {
+        const statusTitles = {
+            online: [
+                '🟢 1ypi - Online',
+                '💚 1ypi - Active',
+                '✅ 1ypi - Ready',
+                '🔥 1ypi - Coding'
+            ],
+            idle: [
+                '🟡 1ypi - Away',
+                '😴 1ypi - Idle',
+                '⏰ 1ypi - BRB'
+            ],
+            dnd: [
+                '🔴 1ypi - Busy',
+                '⛔ 1ypi - Do not disturb',
+                '🎯 1ypi - Focused',
+                '💼 1ypi - Working'
+            ],
+            offline: [
+                '⚫ 1ypi - Offline',
+                '📵 1ypi - Disconnected'
+            ]
+        };
+
+        if (statusTitles[status]) {
+            this.animatedTitles = statusTitles[status];
+            this.titleIndex = 0;
+        }
+    }
+}
+
+const dynamicFavicon = new DynamicFavicon();
+dynamicFavicon.createTextFavicon('1Y', '#000000', '#00ff00'); 
+

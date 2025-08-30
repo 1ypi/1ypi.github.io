@@ -358,6 +358,8 @@
             font-size: 60px;
             color: #666;
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
         }
 
         .profile-pic::before {
@@ -768,70 +770,69 @@
                 width: 100vw;
                 box-sizing: border-box;
             }
-            
+
             .skills-grid {
                 grid-template-columns: 1fr;
                 gap: 16px;
             }
-            
+
             .stats-section {
                 flex-direction: column;
                 align-items: stretch;
             }
-            
+
             .profile-pic img {
                 width: 80px;
                 height: 80px;
             }
-            
+
             .enter-button, .boot-confirm-btn {
                 font-size: 1.2em;
                 padding: 16px 32px;
             }
-            
-            /* Boot screen mobile optimizations */
+
             .boot-screen {
                 font-size: 10px;
                 line-height: 1.2;
                 padding: 10px;
             }
-            
+
             .boot-logo {
                 font-size: 14px;
                 margin-bottom: 10px;
             }
-            
+
             .boot-line {
                 margin-bottom: 1px;
                 word-break: break-all;
                 overflow-wrap: break-word;
             }
-            
+
             .boot-logs {
                 max-height: calc(100vh - 120px);
                 overflow-y: auto;
                 padding-right: 5px;
             }
-            
+
             .boot-progress {
                 bottom: 20px;
                 font-size: 10px;
             }
-            
+
             .boot-spinner {
                 width: 15px;
                 height: 15px;
                 border-width: 1px;
             }
-            
+
             .virtual-keyboard {
                 display: block;
             }
-            
+
             .boot-input {
                 margin-bottom: 80px;
             }
-            
+
             .virtual-key {
                 padding: 12px 20px;
                 margin: 3px;
@@ -839,26 +840,303 @@
             }
         }
 
-        /* Additional mobile optimization for very small screens */
         @media (max-width: 480px) {
             .boot-screen {
                 font-size: 9px;
                 line-height: 1.1;
                 padding: 8px;
             }
-            
+
             .boot-logo {
                 font-size: 12px;
                 margin-bottom: 8px;
             }
-            
+
             .boot-line {
                 font-size: 8px;
             }
-            
+
             .virtual-key {
                 padding: 10px 15px;
                 margin: 2px;
                 font-size: 11px;
+            }
+        }
+
+        .discord-status-section {
+            margin: 60px 0;
+        }
+
+        .discord-status-card {
+            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(114, 137, 218, 0.05));
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(88, 101, 242, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0; 
+            transform: translateY(30px); 
+        }
+
+        .discord-status-card:hover {
+            border-color: rgba(88, 101, 242, 0.6);
+            box-shadow: 0 12px 40px rgba(88, 101, 242, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .discord-status-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, transparent, rgba(88, 101, 242, 0.3), transparent);
+            border-radius: 16px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .discord-status-card:hover::before {
+            opacity: 1;
+        }
+
+        .discord-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .discord-avatar {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            overflow: visible;
+        }
+
+        .discord-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%
+        }
+
+        .status-indicator {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .status-online { background: #23a55a; }
+        .status-idle { background: #f0b232; }
+        .status-dnd { background: #f23f43; }
+        .status-offline { background: #80848e; }
+
+        .discord-info h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #ffffff;
+        }
+
+        .discord-info .username {
+            color: #b9bbbe;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .discord-info .status-text {
+            color: #72767d;
+            font-size: 12px;
+            text-transform: capitalize;
+        }
+
+        .activities-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .activity-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .activity-card:hover::before {
+            left: 100%;
+        }
+
+        .activity-card:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(4px);
+        }
+
+        .activity-image {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .activity-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .activity-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .activity-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .activity-description {
+            font-size: 12px;
+            color: #b9bbbe;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .spotify-activity {
+            border-left: 4px solid #1db954;
+            background: linear-gradient(135deg, rgba(29, 185, 84, 0.1), rgba(29, 185, 84, 0.05));
+        }
+
+        .spotify-activity .activity-name {
+            color: #1db954;
+        }
+
+        .spotify-link {
+            color: #1db954;
+            text-decoration: none;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 4px;
+            transition: opacity 0.3s ease;
+        }
+
+        .spotify-link:hover {
+            opacity: 0.8;
+        }
+
+        .game-activity {
+            border-left: 4px solid #7289da;
+            background: linear-gradient(135deg, rgba(114, 137, 218, 0.1), rgba(114, 137, 218, 0.05));
+        }
+
+        .custom-status {
+            border-left: 4px solid #faa61a;
+            background: linear-gradient(135deg, rgba(250, 166, 26, 0.1), rgba(250, 166, 26, 0.05));
+        }
+
+        .loading-placeholder {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            color: #72767d;
+            font-size: 14px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-top: 2px solid #5865f2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        .error-state {
+            background: rgba(242, 63, 67, 0.1);
+            border: 1px solid rgba(242, 63, 67, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            color: #f23f43;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .discord-status-card {
+                padding: 20px;
+                border-radius: 12px;
+            }
+
+            .discord-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+
+            .discord-avatar {
+                width: 56px;
+                height: 56px;
+            }
+
+            .status-indicator {
+                width: 16px;
+                height: 16px;
+                border-width: 2px;
+            }
+
+            .activity-card {
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .activity-image {
+                width: 40px;
+                height: 40px;
             }
         }

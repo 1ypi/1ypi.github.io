@@ -45,10 +45,20 @@
 
             <div class="header">
                 <div class="profile-pic">
-                    <img src="1ypi.jpeg" alt="1ypi" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img id="discordAvatar" src="1ypi.jpeg" alt="Discord Avatar" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
-                <h1 class="username encrypted glitch" data-text="1ypi">1ypi</h1>
-                <p class="bio encrypted" data-text="Cybersecurity Student &amp; Digital Forensics Enthusiast">Cybersecurity Student &amp; Digital Forensics Enthusiast</p>
+                <h1 class="username encrypted glitch" id="lanyardUsername" data-text="1ypi">1ypi</h1>
+                <span id="lanyardDiscordTag" class="bio encrypted" data-text="@1ypi">@1ypi</span>
+                <span id="lanyardServerTag" class="bio encrypted hidden"></span>
+                <span id="statusIcon"></span>
+            </div>
+            <div class="discord-status-section">
+                <div class="discord-status-card" id="discordStatus">
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        Loading Discord status...
+                    </div>
+                </div>
             </div>
 
             <div class="terminal">
