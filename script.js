@@ -1,24 +1,4 @@
 const cursor = document.querySelector('.cursor');
-        let mouseX = 0;
-        let mouseY = 0;
-        let cursorX = 0;
-        let cursorY = 0;
-
-        document.addEventListener('mousemove', e => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.2;
-            cursorY += (mouseY - cursorY) * 0.2;
-
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
 
         const interactiveElements = document.querySelectorAll('button, .social-icon, .skill-card, .discord-container');
 
@@ -256,7 +236,7 @@ function showBootPrompt() {
 
             const cursor = promptLine.querySelector('.cursor');
             if (cursor) {
-                cursor.remove();
+                
             }
             promptLine.innerHTML = `Boot system? (Y/n): ${keyValue}`;
 
@@ -302,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (e.key === 'Enter') {
             if (cursor) {
-                cursor.remove();
+                
             }
 
             const inputToProcess = userInput || 'y'; 
@@ -315,14 +295,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             userInput = e.key;
             if (cursor) {
-                cursor.remove();
+                
             }
             promptLine.innerHTML = `Boot system? (Y/n): ${userInput}<span class="cursor">_</span>`;
 
         } else if (e.key === 'Backspace' && userInput.length > 0) {
             userInput = '';
             if (cursor) {
-                cursor.remove();
+                
             }
             promptLine.innerHTML = 'Boot system? (Y/n): <span class="cursor">_</span>';
         }
@@ -622,7 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ╚═╝   ╚═╝   ╚═╝     ╚═╝
 
     Welcome to 1ypi's portfolio!
-    Type 'help' for available commands.
+    Type 'help()' for available commands.
         `);
 
         window.help = function() {
@@ -656,16 +636,7 @@ Available commands:
             preloadImages();
         });
 
-function showCursor() {
-    const cursor = document.querySelector('.cursor');
-    cursor.style.display = 'block';
-    cursor.style.opacity = '1';
 
-    document.addEventListener('mousemove', e => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-}
 
 document.querySelectorAll('.virtual-key').forEach(key => {
     key.addEventListener('click', function() {
@@ -1109,25 +1080,16 @@ class DynamicFavicon {
     updateTitleForStatus(status) {
         const statusTitles = {
             online: [
-                '🟢 1ypi - Online',
-                '💚 1ypi - Active',
-                '✅ 1ypi - Ready',
-                '🔥 1ypi - Coding'
+                '🟢 1ypi - Online'
             ],
             idle: [
-                '🟡 1ypi - Away',
-                '😴 1ypi - Idle',
-                '⏰ 1ypi - BRB'
+                '🟡 1ypi - Away'
             ],
             dnd: [
-                '🔴 1ypi - Busy',
-                '⛔ 1ypi - Do not disturb',
-                '🎯 1ypi - Focused',
-                '💼 1ypi - Working'
+                '🔴 1ypi - Busy'
             ],
             offline: [
-                '⚫ 1ypi - Offline',
-                '📵 1ypi - Disconnected'
+                '⚫ 1ypi - Offline'
             ]
         };
 
@@ -1142,6 +1104,7 @@ const dynamicFavicon = new DynamicFavicon();
 dynamicFavicon.createTextFavicon('1Y', '#000000', '#00ff00'); 
 
 // Hi
+
 
 
 
