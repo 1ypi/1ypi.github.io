@@ -85,7 +85,7 @@ const cursor = document.querySelector('.cursor');
             '[    0.001000] BIOS-e820: [mem 0x000000000009fc00-0x000000000009ffff] reserved',
             '[    0.002000] NX (Execute Disable) protection: active',
             '[    0.002000] SMBIOS 3.0 present.',
-            '[    0.002000] DMI: 1ypi/CyberSec-Machine, BIOS 1.0 08/10/2025',
+            '[    0.002000] DMI: 1ypi/Machine, BIOS 1.0 08/10/2025',
             '[    0.003000] tsc: Fast TSC calibration using PIT',
             '[    0.003000] tsc: Detected 3400.000 MHz processor',
             '[    0.004000] e820: update [mem 0x00000000-0x00000fff] usable ==> reserved',
@@ -96,8 +96,8 @@ const cursor = document.querySelector('.cursor');
             '[    0.007000] RAMDISK: [mem 0x36d65000-0x37799fff]',
             '[    0.008000] ACPI: Early table checksum verification disabled',
             '[    0.008000] ACPI: RSDP 0x00000000000F0490 000024 (v02 1YPI  )',
-            '[    0.009000] ACPI: XSDT 0x00000000BF79E0E8 00005C (v01 1YPI   CYBERSEC 00000001)',
-            '[    0.010000] ACPI: FACP 0x00000000BF79C000 000114 (v06 1YPI   CYBERSEC 00000001)',
+            '[    0.009000] ACPI: XSDT 0x00000000BF79E0E8 00005C (v01 1YPI   C 00000001)',
+            '[    0.010000] ACPI: FACP 0x00000000BF79C000 000114 (v06 1YPI   C 00000001)',
             '[    0.011000] ACPI BIOS Warning: 32/64-bit length mismatch in FADT/Pm1aEventLength',
             '[    0.012000] IOAPIC[0]: apic_id 2, version 32, address 0xfec00000, GSI 0-119',
             '[    0.013000] ACPI: INT_SRC_OVR (bus 0 bus_irq 0 global_irq 2 dfl dfl)',
@@ -193,12 +193,12 @@ const cursor = document.querySelector('.cursor');
             '[    0.103000] thermal_sys: Registered thermal governor \'user_space\'',
             '[    0.104000] cpuidle: using governor ladder',
             '[    0.105000] cpuidle: using governor menu',
-            '[    0.200000] 1ypi CyberSec System initialized successfully',
+            '[    0.200000] System initialized successfully',
             '[    0.201000] Loading security modules...',
             '[    0.202000] Forensics toolkit ready',
             '[    0.203000] Penetration testing framework loaded',
             '[    0.204000] Network security protocols active',
-            '[    0.205000] Welcome, 1ypi'
+            '[    0.205000] Welcome back!'
         ];
 
         function createBeepSound() {
@@ -625,7 +625,7 @@ Available commands:
             console.log('DOM elements: ' + document.querySelectorAll('*').length);
         };
         window.about = function() {
-            console.log('1ypi Cybersecurity Portfolio v1.0 - Built with pure HTML/CSS/JS');
+            console.log('1ypi - Built with pure HTML/CSS/JS');
         };
 
         const preloadImages = () => {
@@ -1048,7 +1048,7 @@ class DynamicFavicon {
 
         let isVisible = true;
         this.titleInterval = setInterval(() => {
-            document.title = isVisible ? '🔴 1ypi - Come back!' : '● 1ypi - New activity';
+            document.title = isVisible ? '● 1ypi - New activity';
             isVisible = !isVisible;
         }, 1000);
     }
@@ -1104,6 +1104,7 @@ const dynamicFavicon = new DynamicFavicon();
 dynamicFavicon.createTextFavicon('1Y', '#000000', '#00ff00'); 
 
 // Hi
+
 
 
 
