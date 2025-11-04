@@ -12,29 +12,8 @@
             background: #000000;
             color: #ffffff;
             overflow-x: hidden;
-            cursor: none;
         }
 
-        .cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border: 1px solid #ffffff;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: difference;
-            transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease;
-            opacity: 0; 
-            display: none; 
-        }
-
-        .cursor.hover {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-        }
 
         .background-container {
             position: fixed;
@@ -717,7 +696,6 @@
             background: #222;
             color: #fff;
             margin-top: 24px;
-            cursor: pointer;
         }
         .boot-confirm-btn:active {
             background: #444;
@@ -762,9 +740,6 @@
             }
         }
         @media (max-width: 768px) {
-            .cursor {
-                display: none !important;
-            }
             .container, .main-content {
                 padding: 10px;
                 width: 100vw;
@@ -1141,3 +1116,4 @@
             }
 
         }
+
